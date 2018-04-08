@@ -261,8 +261,11 @@
     function parseToDict(search) {
         var dict = {};
         if (search instanceof FormData) {
-          for (let entry of search.entries()) {
-            appendTo(dict, entry[0], entry[1]);
+          var entriesIterator = search.entries();
+          var entry = entriesIterator.next();
+          while (!entry.done) {
+            appendTo(dict, entry.value[0], entry.value[1]);
+            entry = entriesIterator.next();
           }
         } else if (typeof search === "object") {
             for (var key in search) {
