@@ -260,8 +260,11 @@
 
     function parseToDict(search) {
         var dict = {};
-
-        if (typeof search === "object") {
+        if (search instanceof FormData) {
+          for (let entry of search.entries()) {
+            appendTo(dict, entry[0], entry[1]);
+          }
+        } else if (typeof search === "object") {
             for (var key in search) {
                 if (search.hasOwnProperty(key)) {
                     appendTo(dict, key, search[key])
